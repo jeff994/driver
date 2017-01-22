@@ -18,14 +18,22 @@ void initSerial()
  	serial::Timeout::simpleTimeout(1000);
  	serial::Timeout timeout	= serial::Timeout::simpleTimeout(1000);
  	my_serial.setTimeout(timeout);
- 	my_serial.setBaudrate (4800);
+ 	my_serial.setBaudrate (9600);
 }
 
 bool openSerial()
 {
 	if(my_serial.isOpen())
 		return true; 
-	my_serial.open();
+	try 
+	{
+		my_serial.open();
+	}
+	catch (serial::SerialException ex)
+ 	{
+ 		ROS_INFO("open fail : ex.what()");
+ 	}
+	
 	return my_serial.isOpen();
 } 
 
